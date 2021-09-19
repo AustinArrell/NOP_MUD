@@ -5,6 +5,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+// TODO: Cut, Copy (Highlighting), Paste, Entry History, Ctrl + Arrows, Shift + Arrows, Ctrl + A
+
 class input_field
 {
     char prompt;
@@ -21,9 +23,7 @@ class input_field
 
     std::string input_buffer;
 
-    sf::Font font; // TODO: Move font to main
-
-    std::string font_path;
+    sf::Font& font;
 
     size_t char_size;
 
@@ -31,11 +31,21 @@ class input_field
 
     sf::RenderWindow& window;
 
+    sf::Glyph prompt_glyph;
+
+    sf::Clock clock;
+
+    sf::Int64 cursor_blink_interval = 500;
+
+    bool cursor_visible = true;
+
 public:
 
-    explicit input_field(sf::RenderWindow& w); // Explicit avoids implicit conversions
+    explicit input_field(sf::RenderWindow& w, sf::Font& f); // Explicit avoids implicit conversions
 
-    void push_buffer(char c);
+    void push_buffer(const char& c);
+
+    void push_buffer(const std::string& s);
 
     void pop_buffer();
 
@@ -53,7 +63,9 @@ public:
 
     void set_size(float x, float y);
 
-    void draw();
+    size_t get_char_size() const;
+
+    void draw() const;
 
     void update();
 

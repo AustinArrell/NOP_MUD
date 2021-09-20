@@ -1,15 +1,15 @@
 
 #include "input_field.hpp"
 #include <iostream>
+#include <cstdlib>
 
-input_field::input_field(sf::RenderWindow& w, sf::Font& f) :
-    window {w},
-    size {w.getSize()},
+input_field::input_field(sf::Font& f, sf::RenderWindow& w) :
+    size { w.getSize() },
     prompt {'>'},
-    font {f}
+    font {f},
+    window {w}
 
 {
-
     input_buffer.reserve(100);
 
     input_text.setFont(font);
@@ -132,6 +132,33 @@ void input_field::set_cursor_offset(int num)
 
 
 //**********************************************************************
+void input_field::set_cursor_offset(sf::Vector2i mouse_pos)
+{
+    clock.restart();
+    cursor_visible = true;
+
+    if(input_text.getGlobalBounds().intersects({mouse_pos.x, mouse_pos.y, 1,1}))
+    {
+        cursor.setPosition(mouse_pos.x, cursor.getPosition().y);
+
+        size_t closest_index = 0;
+
+        size_t closest_distance = 10000;
+
+        for(size_t i; i < input_buffer.size(); i++)
+        {   
+            if (std::abs(input_text.findCharacterPos(i).x - mouse_pos.x) < closest_distance)
+            {
+                closest_distance = std::abs(input_text.findCharacterPos(i).x - mouse_pos.x);
+                closest_index = i;
+            }   
+        }
+        std::cout<<"Closest Index:" << closest_index << "\n";
+    }
+}
+
+
+//**********************************************************************
 void input_field::send_cursor_home()
 {
     cursor.setPosition(pos.x + prompt_glyph.advance , pos.y);
@@ -202,6 +229,17 @@ size_t input_field::get_char_size() const
     return char_size;
 }
 
+//**********************************************************************
+sf::Vector2f input_field::get_pos() const
+{
+    return pos;
+}
+
+//**********************************************************************
+sf::FloatRect input_field::get_global_bounds() const
+{   
+    return bg.getGlobalBounds();
+}
 
 //**********************************************************************
 void input_field::draw() const

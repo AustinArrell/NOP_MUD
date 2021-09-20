@@ -9,6 +9,8 @@
 
 class input_field
 {
+    sf::RenderWindow& window;
+
     char prompt;
 
     sf::RectangleShape bg;
@@ -29,8 +31,6 @@ class input_field
 
     sf::Text input_text;
 
-    sf::RenderWindow& window;
-
     sf::Glyph prompt_glyph;
 
     sf::Clock clock;
@@ -41,7 +41,7 @@ class input_field
 
 public:
 
-    explicit input_field(sf::RenderWindow& w, sf::Font& f); // Explicit avoids implicit conversions
+    explicit input_field(sf::Font& f, sf::RenderWindow& w); // Explicit avoids implicit conversions
 
     void push_buffer(const char& c);
 
@@ -50,6 +50,8 @@ public:
     void pop_buffer();
 
     void set_cursor_offset(int num);
+
+    void set_cursor_offset(sf::Vector2i mouse_pos);
 
     void send_cursor_home();
 
@@ -65,8 +67,13 @@ public:
 
     size_t get_char_size() const;
 
+    sf::Vector2f get_pos() const;
+
+    sf::FloatRect get_global_bounds() const;
+
     void draw() const;
 
     void update();
+
 
 };

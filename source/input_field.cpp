@@ -3,22 +3,18 @@
 #include <iostream>
 #include <cstdlib>
 
-input_field::input_field(sf::Font& f, sf::RenderWindow& w) :
-    size { w.getSize() },
-    prompt {'>'},
-    font {f},
-    window {w}
-
+input_field::input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size) :
+    text_field(f,w,c_size)
 {
+    std::cout << char_size;
+
     input_buffer.reserve(100);
 
     input_text.setFont(font);
 
-    input_text.setCharacterSize(14);
+    input_text.setCharacterSize(char_size);
 
     input_text.setString(prompt);
-
-    char_size = input_text.getCharacterSize();
 
     prompt_glyph = font.getGlyph(prompt,char_size,false);
 
@@ -190,21 +186,6 @@ void input_field::set_pos(sf::Vector2f vec)
 
 
 //**********************************************************************
-void input_field::set_pos(float x, float y)
-{
-    pos.x = x;
-    pos.y = y;
-
-    bg.setPosition(pos);
-    
-    input_text.setPosition(pos);
-
-    cursor.setPosition(pos.x + prompt_glyph.advance , pos.y);
-
-}
-
-
-//**********************************************************************
 void input_field::set_size(sf::Vector2f vec)
 {
     size = vec;
@@ -214,12 +195,9 @@ void input_field::set_size(sf::Vector2f vec)
 
 
 //**********************************************************************
-void input_field::set_size(float x, float y)
+void input_field::set_char_size(size_t s)
 {
-    size.x = x;
-    size.y = y;
-
-    bg.setSize( {static_cast<float>(size.x), static_cast<float>(char_size + 2)} ); // +2 for padding
+    char_size = s;
 }
 
 
@@ -229,17 +207,20 @@ size_t input_field::get_char_size() const
     return char_size;
 }
 
+
 //**********************************************************************
 sf::Vector2f input_field::get_pos() const
 {
     return pos;
 }
 
+
 //**********************************************************************
 sf::FloatRect input_field::get_global_bounds() const
 {   
     return bg.getGlobalBounds();
 }
+
 
 //**********************************************************************
 void input_field::draw() const
@@ -255,6 +236,7 @@ void input_field::draw() const
     }
     
 }
+
 
 //**********************************************************************
 void input_field::update()

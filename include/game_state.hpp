@@ -3,6 +3,7 @@
 
 #include "state_manager.hpp"
 #include "input_field.hpp"
+#include "output_field.hpp"
 #include <SFML/Graphics.hpp>
 
 class game_state : public state
@@ -11,9 +12,13 @@ class game_state : public state
 
     input_field input_f;
 
+    output_field output_f;
+
     sf::Vector2i mouse_pos;
 
     sf::RenderWindow& window;
+
+    int char_size = 14;
 
 
 public:

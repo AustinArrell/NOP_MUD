@@ -2,15 +2,20 @@
 #include "game_state.hpp"
 #include <iostream>
 
+
+//**********************************************************************
 game_state::game_state(sf::Font& f, sf::RenderWindow& w):
     font {f},
-    input_f(f, w),
+    input_f(f, w, 14),
+    output_f(f, w, 0),
     mouse_pos { 0 , 0 },
     window {w}
 {
-    input_f.set_pos(0,w.getSize().y - input_f.get_char_size() - 4); // 4 for padding
+    input_f.set_pos( { 0 , w.getSize().y - input_f.get_char_size() - 4 } ); // 4 for padding
 }
 
+
+//**********************************************************************
 void game_state::handle_events(const sf::Event& e)
 {
     if (e.type == sf::Event::TextEntered)
@@ -52,7 +57,7 @@ void game_state::handle_events(const sf::Event& e)
     if(e.type == sf::Event::MouseMoved)
     {
         mouse_pos = sf::Mouse::getPosition(window);
-        std::cout << "Mouse Pos: " << mouse_pos.x << " , " << mouse_pos.y << "\n";
+        //std::cout << "Mouse Pos: " << mouse_pos.x << " , " << mouse_pos.y << "\n";
     }
     if(e.type == sf::Event::MouseButtonPressed)
     {
@@ -63,22 +68,31 @@ void game_state::handle_events(const sf::Event& e)
     }
 }
 
-    
+
+//**********************************************************************
 void game_state::update()
 {
     input_f.update();
 }
 
+
+//**********************************************************************
 void game_state::draw()const
 {
+    output_f.draw();
+
     input_f.draw();
 }
 
+
+//**********************************************************************
 void game_state::cleanup()
 {
 
 }
 
+
+//**********************************************************************
 void game_state::startup()
 {
 

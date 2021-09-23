@@ -4,6 +4,8 @@ set(sources
     "input_field.cpp"
     "state_manager.cpp"
     "game_state.cpp"
+    "output_field.cpp"
+    "text_field.cpp"
 )
 
 add_executable(mud ${sources})

@@ -43,21 +43,30 @@ public:
 
     void send_cursor_end();
 
-    void set_size(sf::Vector2f vec);
-
-    void set_pos(sf::Vector2f vec);
-
     void set_char_size(size_t s);
 
     size_t get_char_size() const;
 
-    sf::Vector2f get_pos() const;
-
     sf::FloatRect get_global_bounds() const;
 
-    void draw() const;
+    std::string send_command() const;
 
-    void update();
+    void clear_buffer();
+
+    
+    //Overridden functions
+
+    sf::Vector2f get_pos() const override;
+
+    sf::Vector2f get_size() const override;
+
+    void set_size(sf::Vector2f vec) override;
+
+    void set_pos(sf::Vector2f vec) override;
+
+    void draw() const override;
+
+    void update() override;
 
 
 };

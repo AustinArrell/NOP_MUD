@@ -26,6 +26,10 @@ public:
 
     text_field(sf::Font& f, sf::RenderWindow& w, const int& c_size);
 
+    virtual sf::Vector2f get_pos() const = 0;
+
+    virtual sf::Vector2f get_size() const = 0;
+
     virtual void draw() const = 0;
  
     virtual void set_size(sf::Vector2f vec) = 0;

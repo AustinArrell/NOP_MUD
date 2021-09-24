@@ -6,18 +6,24 @@
 
 class output_field : public text_field
 {    
-   
+    std::vector<sf::Text> line_stack;
 
+    const size_t text_padding = 4;
 public:
+    void add_line(std::string s, bool add_prompt = true);
 
-    explicit output_field(sf::Font& f, sf::RenderWindow& w, const int& c_size);
+    explicit output_field(sf::Font& f, sf::RenderWindow& w, const int& c_size); 
 
-    void draw() const;
+    sf::Vector2f get_pos() const override;
 
-    void set_size(sf::Vector2f vec);
+    sf::Vector2f get_size() const override;
 
-    void set_pos(sf::Vector2f vec);
+    void draw() const override;
 
-    void update();
+    void set_size(sf::Vector2f vec) override;
+
+    void set_pos(sf::Vector2f vec) override;
+
+    void update() override;
 
 };

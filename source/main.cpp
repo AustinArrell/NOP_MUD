@@ -6,10 +6,10 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(640, 480), "NOP MUD");
+    sf::RenderWindow window(sf::VideoMode(960, 720), "NOP MUD");
 
     sf::Font font;
-    font.loadFromFile("../resources/fonts/Roboto-Black.ttf");
+    font.loadFromFile("../resources/fonts/Roboto-Regular.ttf");
 
     game_state game(font, window);
     add_state("game" , game);

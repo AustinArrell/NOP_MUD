@@ -12,7 +12,11 @@ class game_state : public state
 
     input_field input_f;
 
-    output_field output_f;
+    output_field output_f1;
+
+    output_field output_f2;
+
+    output_field output_f3;
 
     sf::Vector2i mouse_pos;
 

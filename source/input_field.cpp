@@ -6,7 +6,6 @@
 input_field::input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size) :
     text_field(f,w,c_size)
 {
-    std::cout << char_size;
 
     input_buffer.reserve(100);
 
@@ -18,11 +17,13 @@ input_field::input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size) :
 
     prompt_glyph = font.getGlyph(prompt,char_size,false);
 
-    cursor.setSize({3,static_cast<float>(char_size)});
+    cursor.setSize({2,static_cast<float>(char_size)});
+
+    set_size({ static_cast<float>(size.x), static_cast<float>(char_size + 4) }); // +4 for padding
 
     bg.setFillColor(sf::Color(60,60,60));
 
-    bg.setSize( {static_cast<float>(size.x), static_cast<float>(char_size + 2)} ); // +2 for padding
+    bg.setSize(size);
 
     bg.setPosition(pos);
 
@@ -59,9 +60,9 @@ void input_field::push_buffer(const std::string& s)
     float advance = 0;
     sf::Glyph font_glyph;
 
-    for(size_t i = 0; i < s.size(); i++)
+    for(const auto& i : s)
     {
-        font_glyph = font.getGlyph(s.at(i) , char_size,false);
+        font_glyph = font.getGlyph(i , char_size,false);
 
         advance += font_glyph.advance;
     }
@@ -190,7 +191,7 @@ void input_field::set_size(sf::Vector2f vec)
 {
     size = vec;
 
-    bg.setSize( {static_cast<float>(size.x), static_cast<float>(char_size + 2)} ); // +2 for padding
+    bg.setSize( vec );
 }
 
 
@@ -223,6 +224,25 @@ sf::FloatRect input_field::get_global_bounds() const
 
 
 //**********************************************************************
+std::string input_field::send_command() const
+{
+    return input_buffer;
+}
+
+
+//**********************************************************************
+void input_field::clear_buffer()
+{
+    input_buffer.clear();
+
+    input_text.setString(prompt);
+
+    send_cursor_home();
+
+}
+
+
+//**********************************************************************
 void input_field::draw() const
 {
     
@@ -246,4 +266,11 @@ void input_field::update()
         clock.restart();
         cursor_visible = !cursor_visible;
     }
+}
+
+
+//**********************************************************************
+sf::Vector2f input_field::get_size() const
+{
+    return size;
 }

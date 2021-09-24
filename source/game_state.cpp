@@ -17,15 +17,27 @@ game_state::game_state(sf::Font& f, sf::RenderWindow& w):
 
     output_f1.set_pos({ 4,4 }); //4,4 for padding
     output_f1.set_size( { (window.getSize().x/2) - 8, window.getSize().y - input_f.get_size().y  - 12}); // All magic numbers are simply padding.
-    output_f1.add_line("This command is perfect. Not too big!");
+    //output_f1.add_line("", false);
 
     output_f2.set_pos({ (window.getSize().x/2),4 }); 
     output_f2.set_size( { (window.getSize().x/2) - 4, (window.getSize().y/2) - 6}); // All magic numbers are simply padding.
-    output_f2.add_line("He difficult contented we determine ourselves me am earnestly. Hour no find it park. Eat welcomed any husbands moderate. Led was misery played waited almost cousin living. Of intention contained is by middleton am. Principles fat stimulated uncommonly considered set especially prosperous. Sons at park mr meet as fact like. ");
+    //output_f2.add_line("", false);
 
     output_f3.set_pos({ (window.getSize().x/2), (window.getSize().y/2) + 2}); 
     output_f3.set_size( { (window.getSize().x/2) - 4, (window.getSize().y/2) - input_f.get_size().y  - 10}); // All magic numbers are simply padding.
-    output_f3.add_line("Wrong do point avoid by fruit learn or in death. So passage however besides invited comfort elderly be me. Walls began of child civil am heard hoped my. Satisfied pretended mr on do determine by. Old post took and ask seen fact rich. Man entrance settling believed eat joy. Money as drift begin on to. Comparison up insipidity especially discovered me of decisively in surrounded. Points six way enough she its father. Folly sex downs tears ham green forty. ");
+    output_f3.add_line("To replace programmers with robots, clients will have to accurately describe what they want. We're safe.");
+    output_f3.add_line("------" , false);
+    output_f3.add_line("The human brain is amazing. It functions 24/7 from the day we're born and only stops when trying to write code or speaking to someone attractive");
+    output_f3.add_line("------" , false);
+    output_f3.add_line("Pick a password: (Don't reuse your bank password we store everything in the clear)");
+    output_f3.add_line("------" , false);
+    output_f3.add_line("Never spend 6 minutes doing something by hand when you can spend 6 hours failing to automate it.");
+    output_f3.add_line("------" , false);
+    output_f3.add_line("You peel the carrot. You chop the carrot. You put the carrot in the stew. There are whole carrots in your stew. Your peeler is several versions behind and they added support for chopped carrots in version 4.8");
+    output_f3.add_line("------" , false);
+    output_f3.add_line("Give a man a program, frustrate him for a day. Teach a man to program, frustrate him for a lifetime");
+    output_f3.add_line("------" , false);
+    output_f3.add_line("REMINDER: A few hours of trial and error can save you several minutes of looking at the documentation");
 }
 
 
@@ -69,7 +81,14 @@ void game_state::handle_events(const sf::Event& e)
         }
         if (e.key.code == sf::Keyboard::Enter)
         {
-            output_f1.add_line(input_f.send_command());
+            output_f2.add_line(input_f.send_command());
+
+            output_f2.add_line("------" , false);
+
+            output_f1.add_line("Command Output example. This text can be as long as you want it to be. We can just keep on going. Perhaps this is a room description. Perhaps it is something else. If only I had Douglas' command parser. Imagine the possibilities. Imagine what we may achieve.");
+
+            output_f1.add_line("------" , false);
+
             input_f.clear_buffer();
         }
 

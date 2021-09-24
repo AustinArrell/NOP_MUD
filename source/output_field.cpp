@@ -52,18 +52,32 @@ void output_field::add_line(std::string s, bool add_prompt)
         {
             if (last_line.findCharacterPos(i).x > size.x + pos.x - font.getGlyph(last_line.getString()[i], char_size, false).advance - text_padding)
             {
-                // Set i to the last space character.
-                while(last_line.getString()[i] != 32)
+                int last_space_index = i;
+                
+                // Look for the last space character.
+                while(last_line.getString()[last_space_index] != 32)
                 {
-                    i -= 1;
+                    last_space_index -= 1;
                 }
 
-                remainder_str = current_str.substr(i, current_str.size()-1);
+                // If no space character exists just wrap the text by character
+                if ( last_space_index <= 0)
+                {
+                    remainder_str = current_str.substr(i, current_str.size()-1);
 
-                last_line.setString(current_str.substr(0,i));
+                    last_line.setString(current_str.substr(0,i));
+                
+                // If a space character exists wrap the text by word
+                }else
+                {
+                    remainder_str = current_str.substr(last_space_index, current_str.size()-1);
 
-                add_line("\t"+remainder_str, false);
+                    last_line.setString(current_str.substr(0,last_space_index));
+                }
 
+                // Recurse until the line fits
+                add_line("\t" + remainder_str, false);
+                
                 break;
             }
         }

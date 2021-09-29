@@ -5,12 +5,18 @@
 
 #include "input_field.hpp"
 #include "game_state.hpp"
+#include "network.hpp"
 
 int main()
 {
     std::string server_ip;
-    std::cout << "Server IP: ";
+    std::cout << "Server IP : ";
     std::getline(std::cin, server_ip);
+    std::cout << std::endl;
+
+    std::string username;
+    std::cout << "User Name : ";
+    std::getline(std::cin, username);
     std::cout << std::endl;
 
     sf::TcpSocket socket;
@@ -22,24 +28,35 @@ int main()
         return -1;
     }
 
+    session_id id;
+    mud_packet packet;
+
+    packet.receive(socket);
+    id = packet.id;
+
+    packet.type = packet_type::username;
+    packet.data = username;
+
+    packet.send(socket);
+
     std::cout
         << "Connected to Server : "
         << socket.getRemoteAddress()
         << ":"
         << socket.getRemotePort()
         << std::endl;
+    std::cout << "Session id : " << id << std::endl;
 
-    std::string input;
-    sf::Packet packet;
 
     while(true)
     {
         std::cout << " > ";
-        std::getline(std::cin, input);
+        std::getline(std::cin, packet.data);
 
-        packet.clear();
-        packet << input;
-        socket.send(packet);
+        packet.type = packet_type::command;
+        packet.id = id;
+
+        packet.send(socket);
     }
 
 

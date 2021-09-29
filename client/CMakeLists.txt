@@ -4,6 +4,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(client_source
+    "${CMAKE_SOURCE_DIR}/common/network.cpp"
     "./main.cpp"
     "./input_field.cpp"
     "./state_manager.cpp"
@@ -14,4 +15,5 @@ set(client_source
 
 add_executable(mudclient ${client_source})
 
+target_include_directories(mudclient PUBLIC "${CMAKE_SOURCE_DIR}/common")
 target_link_libraries(mudclient sfml-main sfml-system sfml-window sfml-graphics sfml-network)

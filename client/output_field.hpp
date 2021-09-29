@@ -5,14 +5,14 @@
 #include "text_field.hpp"
 
 class output_field : public text_field
-{    
+{
     std::vector<sf::Text> line_stack;
 
     const size_t text_padding = 4;
 public:
     void add_line(std::string s, bool add_prompt = true);
 
-    explicit output_field(sf::Font& f, sf::RenderWindow& w, const int& c_size); 
+    explicit output_field(sf::Font& f, sf::RenderWindow& w, size_t c_size);
 
     sf::Vector2f get_pos() const override;
 

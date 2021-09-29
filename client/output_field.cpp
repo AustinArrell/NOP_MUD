@@ -5,7 +5,7 @@
 
 
 //**********************************************************************
-output_field::output_field(sf::Font& f, sf::RenderWindow& w, const int& c_size) :
+output_field::output_field(sf::Font& f, sf::RenderWindow& w, size_t c_size) :
     text_field(f, w, c_size)
 {
     line_stack.reserve(40);
@@ -29,7 +29,7 @@ void output_field::add_line(std::string s, bool add_prompt)
     // Creating variables for readability
     size_t stack_size = line_stack.size();
     sf::Text& last_line = line_stack.back();
-    
+
     // Set text position
     if(stack_size > 1)
     {
@@ -53,7 +53,7 @@ void output_field::add_line(std::string s, bool add_prompt)
             if (last_line.findCharacterPos(i).x > size.x + pos.x - font.getGlyph(last_line.getString()[i], char_size, false).advance - text_padding)
             {
                 int last_space_index = i;
-                
+
                 // Look for the last space character.
                 while(last_line.getString()[last_space_index] != 32)
                 {
@@ -66,7 +66,7 @@ void output_field::add_line(std::string s, bool add_prompt)
                     remainder_str = current_str.substr(i, current_str.size()-1);
 
                     last_line.setString(current_str.substr(0,i));
-                
+
                 // If a space character exists wrap the text by word
                 }else
                 {
@@ -77,7 +77,7 @@ void output_field::add_line(std::string s, bool add_prompt)
 
                 // Recurse until the line fits
                 add_line("\t" + remainder_str, false);
-                
+
                 break;
             }
         }

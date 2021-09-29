@@ -13,18 +13,18 @@ game_state::game_state(sf::Font& f, sf::RenderWindow& w):
     mouse_pos { 0 , 0 },
     window {w}
 {
-    input_f.set_pos( { 0 , w.getSize().y - input_f.get_char_size() - 4 } ); // 4 for padding
+    input_f.set_pos( { 0.0f , w.getSize().y - input_f.get_char_size() - 4.0f } ); // 4 for padding
 
-    output_f1.set_pos({ 4,4 }); //4,4 for padding
-    output_f1.set_size( { (window.getSize().x/2) - 8, window.getSize().y - input_f.get_size().y  - 12}); // All magic numbers are simply padding.
+    output_f1.set_pos({ 4.0f,4.0f }); //4,4 for padding
+    output_f1.set_size( { (window.getSize().x/2.0f) - 8.0f, window.getSize().y - input_f.get_size().y  - 12.0f}); // All magic numbers are simply padding.
     //output_f1.add_line("", false);
 
-    output_f2.set_pos({ (window.getSize().x/2),4 }); 
-    output_f2.set_size( { (window.getSize().x/2) - 4, (window.getSize().y/2) - 6}); // All magic numbers are simply padding.
+    output_f2.set_pos({ (window.getSize().x/2.0f),4 });
+    output_f2.set_size( { (window.getSize().x/2.0f) - 4.0f, (window.getSize().y/2.0f) - 6.0f}); // All magic numbers are simply padding.
     //output_f2.add_line("", false);
 
-    output_f3.set_pos({ (window.getSize().x/2), (window.getSize().y/2) + 2}); 
-    output_f3.set_size( { (window.getSize().x/2) - 4, (window.getSize().y/2) - input_f.get_size().y  - 10}); // All magic numbers are simply padding.
+    output_f3.set_pos({ (window.getSize().x/2.0f), (window.getSize().y/2.0f) + 2.0f});
+    output_f3.set_size( { (window.getSize().x/2.0f) - 4.0f, (window.getSize().y/2.0f) - input_f.get_size().y  - 10.0f}); // All magic numbers are simply padding.
     output_f3.add_line("To replace programmers with robots, clients will have to accurately describe what they want. We're safe.");
     output_f3.add_line("------" , false);
     output_f3.add_line("The human brain is amazing. It functions 24/7 from the day we're born and only stops when trying to write code or speaking to someone attractive");
@@ -45,7 +45,7 @@ game_state::game_state(sf::Font& f, sf::RenderWindow& w):
 void game_state::handle_events(const sf::Event& e)
 {
     if (e.type == sf::Event::TextEntered)
-    {   
+    {
         //if backspace is pressed pop off the buffer
         if(e.key.code == 8)
         {
@@ -55,7 +55,7 @@ void game_state::handle_events(const sf::Event& e)
         {
             input_f.push_buffer(static_cast<char>(e.key.code));
         }
-                
+
     }
     if (e.type == sf::Event::KeyPressed)
     {

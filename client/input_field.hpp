@@ -27,7 +27,7 @@ class input_field : public text_field
 
 public:
 
-    explicit input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size);
+    explicit input_field(sf::Font& f, sf::RenderWindow& w, size_t c_size);
 
     void push_buffer(const char& c);
 
@@ -53,7 +53,7 @@ public:
 
     void clear_buffer();
 
-    
+
     //Overridden functions
 
     sf::Vector2f get_pos() const override;

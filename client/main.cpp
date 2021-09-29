@@ -8,10 +8,17 @@
 
 int main()
 {
+    std::string server_ip;
+    std::cout << "Server IP: ";
+    std::getline(std::cin, server_ip);
+    std::cout << std::endl;
+
     sf::TcpSocket socket;
-    sf::Socket::Status status = socket.connect("localhost", 53000);
+    sf::Socket::Status status = socket.connect(server_ip, 53000);
     if (status != sf::Socket::Done)
     {
+        std::cout << "Failed to connect to server!\n";
+        system("pause");
         return -1;
     }
 

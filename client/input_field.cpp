@@ -32,6 +32,80 @@ input_field::input_field(sf::Font& f, sf::RenderWindow& w, size_t c_size) :
 
 
 //**********************************************************************
+void input_field::handle_events(const sf::Event& e)
+{
+    if(e.type == sf::Event::MouseButtonPressed)
+    {
+        if (e.mouseButton.button == sf::Mouse::Left)
+        {
+            if(bg.getGlobalBounds().contains((float) e.mouseButton.x, (float) e.mouseButton.y))
+            {
+                active = true;
+                send_cursor_end();
+            }
+        }
+    }
+
+    // only handle events if active
+    if(!active)
+    { return; }
+
+    if (e.type == sf::Event::TextEntered)
+    {
+        //if backspace is pressed pop off the buffer
+        if(e.key.code == 8)
+        {
+            pop_buffer();
+        }
+        else if(e.key.code >= 0 && e.key.code <= 127 && std::isprint(e.key.code))
+        {
+            push_buffer(static_cast<char>(e.key.code));
+        }
+
+    }
+
+    if (e.type == sf::Event::KeyPressed)
+    {
+        if(e.key.control && e.key.code == sf::Keyboard::V)
+        {
+            push_buffer(sf::Clipboard::getString());
+        }
+        if (e.key.code == sf::Keyboard::Left)
+        {
+            set_cursor_offset(1);
+        }
+        if (e.key.code == sf::Keyboard::Right)
+        {
+            set_cursor_offset(-1);
+        }
+        if (e.key.code == sf::Keyboard::Home)
+        {
+            send_cursor_home();
+        }
+        if (e.key.code == sf::Keyboard::End)
+        {
+            send_cursor_end();
+        }
+    }
+
+    if(e.type == sf::Event::MouseButtonPressed)
+    {
+        if (e.mouseButton.button == sf::Mouse::Left)
+        {
+            if(bg.getGlobalBounds().contains((float) e.mouseButton.x, (float) e.mouseButton.y))
+            {
+                set_cursor_offset({ e.mouseButton.x, e.mouseButton.y });
+            }
+            else
+            {
+                active = false;
+            }
+        }
+    }
+}
+
+
+//**********************************************************************
 void input_field::push_buffer(const char& c)
 {
     clock.restart();
@@ -224,7 +298,7 @@ sf::FloatRect input_field::get_global_bounds() const
 
 
 //**********************************************************************
-std::string input_field::send_command() const
+std::string input_field::get_string() const
 {
     return input_buffer;
 }
@@ -250,7 +324,7 @@ void input_field::draw() const
 
     window.draw(input_text);
 
-    if(cursor_visible)
+    if(cursor_visible && active)
     {
         window.draw(cursor);
     }

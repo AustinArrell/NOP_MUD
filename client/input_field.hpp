@@ -24,6 +24,7 @@ class input_field : public text_field
     sf::Int64 cursor_blink_interval = 500;
 
     bool cursor_visible = true;
+    bool active = false;
 
 public:
 
@@ -49,12 +50,13 @@ public:
 
     sf::FloatRect get_global_bounds() const;
 
-    std::string send_command() const;
+    std::string get_string() const;
 
     void clear_buffer();
 
+    void handle_events(const sf::Event& e);
 
-    //Overridden functions
+    // Overridden functions
 
     sf::Vector2f get_pos() const override;
 

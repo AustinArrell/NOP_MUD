@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(server_source
     "${CMAKE_SOURCE_DIR}/common/network.cpp"
     "./main.cpp"
+    "./server.cpp"
 )
 
 add_executable(mudserver ${server_source})

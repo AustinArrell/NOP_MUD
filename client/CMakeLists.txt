@@ -6,11 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(client_source
     "${CMAKE_SOURCE_DIR}/common/network.cpp"
     "./main.cpp"
+    "./client.cpp"
     "./input_field.cpp"
     "./state_manager.cpp"
     "./game_state.cpp"
+    "./login_state.cpp"
     "./output_field.cpp"
     "./text_field.cpp"
+    "./button.cpp"
 )
 
 add_executable(mudclient ${client_source})

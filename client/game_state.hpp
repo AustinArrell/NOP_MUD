@@ -4,6 +4,7 @@
 #include "state_manager.hpp"
 #include "input_field.hpp"
 #include "output_field.hpp"
+
 #include <SFML/Graphics.hpp>
 
 class game_state : public state
@@ -29,10 +30,10 @@ public:
     explicit game_state(sf::Font& f, sf::RenderWindow& w);
 
     virtual void handle_events(const sf::Event& e) override;
-    
+
     virtual void update() override;
 
-    virtual void draw()const override;
+    virtual void draw() const override;
 
     virtual void cleanup() override;
 

@@ -86,6 +86,14 @@ void input_field::handle_events(const sf::Event& e)
         {
             send_cursor_end();
         }
+        if (e.key.code == sf::Keyboard::Up)
+        {
+            move_history(true);
+        }
+        if (e.key.code == sf::Keyboard::Down)
+        {
+            move_history(false);
+        }
     }
 
     if(e.type == sf::Event::MouseButtonPressed)
@@ -348,4 +356,40 @@ void input_field::update()
 sf::Vector2f input_field::get_size() const
 {
     return size;
+}
+
+//**********************************************************************
+ void input_field::move_history(bool up)
+ {
+     if(command_history.size() > 0)
+     {
+        if(up && history_offset < command_history.size())
+        {
+            history_offset += 1;
+
+            input_buffer.clear();
+
+            send_cursor_home();
+
+            push_buffer(command_history.rbegin()[history_offset - 1]);
+
+        }else if(!up && history_offset > 1)
+        {
+            history_offset -= 1;
+
+            input_buffer.clear();
+
+            send_cursor_home();
+
+            push_buffer(command_history.rbegin()[history_offset - 1]);
+        }
+
+     }
+ }
+
+
+//**********************************************************************
+void input_field::push_history(std::string s)
+{
+    command_history.push_back(s);
 }

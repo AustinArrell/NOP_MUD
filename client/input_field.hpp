@@ -15,6 +15,10 @@ class input_field : public text_field
 
     int cursor_offset = 0;
 
+    int history_offset = 0;
+
+    std::vector<std::string> command_history;
+
     std::string input_buffer;
 
     sf::Text input_text;
@@ -24,6 +28,7 @@ class input_field : public text_field
     sf::Int64 cursor_blink_interval = 500;
 
     bool cursor_visible = true;
+
     bool active = false;
 
 public:
@@ -55,6 +60,10 @@ public:
     void clear_buffer();
 
     void handle_events(const sf::Event& e);
+
+    void move_history(bool up);
+
+    void push_history(std::string s);
 
     // Overridden functions
 

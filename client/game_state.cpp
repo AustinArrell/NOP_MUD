@@ -61,6 +61,8 @@ void game_state::handle_events(const sf::Event& e)
             output_f1.add_line(packet.data , false);
             output_f1.add_line("------" , false);
 
+            input_f.push_history(input_f.get_string());
+            
             input_f.clear_buffer();
         }
     }

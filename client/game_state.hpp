@@ -4,6 +4,7 @@
 #include "state_manager.hpp"
 #include "input_field.hpp"
 #include "output_field.hpp"
+#include "parser.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -25,8 +26,8 @@ class game_state : public state
 
     int char_size = 14;
 
-
 public:
+
     explicit game_state(sf::Font& f, sf::RenderWindow& w);
 
     virtual void handle_events(const sf::Event& e) override;

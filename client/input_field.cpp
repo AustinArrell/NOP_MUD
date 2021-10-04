@@ -9,6 +9,8 @@ input_field::input_field(sf::Font& f, sf::RenderWindow& w, size_t c_size) :
 
     input_buffer.reserve(100);
 
+    command_history.reserve(150);
+
     input_text.setFont(font);
 
     input_text.setCharacterSize(char_size);
@@ -118,8 +120,9 @@ void input_field::handle_events(const sf::Event& e)
 void input_field::push_buffer(const char& c)
 {
     clock.restart();
+  
     cursor_visible = true;
-
+  
     sf::Glyph font_glyph = font.getGlyph(c,char_size,false);
 
     if(input_text.getLocalBounds().width + font_glyph.advance < size.x - cursor.getLocalBounds().width)
@@ -149,7 +152,6 @@ void input_field::push_buffer(const std::string& s)
 
         advance += font_glyph.advance;
     }
-
 
     if(input_text.getLocalBounds().width + advance < size.x - cursor.getLocalBounds().width)
     {
@@ -216,8 +218,9 @@ void input_field::set_cursor_offset(sf::Vector2i mouse_pos)
 {
     clock.restart();
     cursor_visible = true;
-
+  
     if(input_text.getGlobalBounds().intersects({static_cast<float>(mouse_pos.x), static_cast<float>(mouse_pos.y), 1.0f,1.0f}))
+
     {
         cursor.setPosition(mouse_pos.x, cursor.getPosition().y);
 
@@ -226,12 +229,12 @@ void input_field::set_cursor_offset(sf::Vector2i mouse_pos)
         size_t closest_distance = 10000;
 
         for(size_t i; i < input_buffer.size(); i++)
-        {
+        {   
             if (std::abs(input_text.findCharacterPos(i).x - mouse_pos.x) < closest_distance)
             {
                 closest_distance = std::abs(input_text.findCharacterPos(i).x - mouse_pos.x);
                 closest_index = i;
-            }
+            }   
         }
         std::cout<<"Closest Index:" << closest_index << "\n";
     }
@@ -241,8 +244,12 @@ void input_field::set_cursor_offset(sf::Vector2i mouse_pos)
 //**********************************************************************
 void input_field::send_cursor_home()
 {
-    cursor.setPosition(pos.x + prompt_glyph.advance , pos.y);
+    clock.restart();
+    
+    cursor_visible = true;
 
+    cursor.setPosition(pos.x + prompt_glyph.advance , pos.y);
+    
     cursor_offset = input_buffer.size();
 }
 
@@ -250,6 +257,10 @@ void input_field::send_cursor_home()
 //**********************************************************************
 void input_field::send_cursor_end()
 {
+    clock.restart();
+    
+    cursor_visible = true;
+
     cursor.setPosition(pos.x + input_text.getGlobalBounds().width , pos.y);
 
     cursor_offset = 0;
@@ -307,6 +318,7 @@ sf::FloatRect input_field::get_global_bounds() const
 
 
 //**********************************************************************
+
 std::string input_field::get_string() const
 {
     return input_buffer;
@@ -347,6 +359,7 @@ void input_field::update()
     if(clock.getElapsedTime().asMilliseconds() >= cursor_blink_interval)
     {
         clock.restart();
+
         cursor_visible = !cursor_visible;
     }
 }
@@ -357,6 +370,7 @@ sf::Vector2f input_field::get_size() const
 {
     return size;
 }
+
 
 //**********************************************************************
  void input_field::move_history(bool up)
@@ -385,11 +399,15 @@ sf::Vector2f input_field::get_size() const
         }
 
      }
+
  }
 
 
 //**********************************************************************
 void input_field::push_history(std::string s)
 {
+    history_offset = 0;
+    
     command_history.push_back(s);
 }
+

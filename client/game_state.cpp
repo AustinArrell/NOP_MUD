@@ -1,8 +1,8 @@
+
 #include "game_state.hpp"
-
 #include "client.hpp"
-
 #include <iostream>
+#include <regex>
 
 
 //**********************************************************************
@@ -64,14 +64,19 @@ void game_state::handle_events(const sf::Event& e)
             input_f.push_history(input_f.get_string());
             
             input_f.clear_buffer();
-        }
-    }
+        }  
 }
 
 
 //**********************************************************************
 void game_state::update()
 {
+    output_f1.update();
+  
+    output_f2.update();
+  
+    output_f3.update();
+
     input_f.update();
 
     if(data_to_recieve())
@@ -91,7 +96,9 @@ void game_state::update()
 void game_state::draw() const
 {
     output_f1.draw();
+  
     output_f2.draw();
+  
     output_f3.draw();
 
     input_f.draw();

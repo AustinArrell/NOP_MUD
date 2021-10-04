@@ -4,6 +4,7 @@
 #include "state_manager.hpp"
 #include "input_field.hpp"
 #include "output_field.hpp"
+#include "parser.hpp"
 #include <SFML/Graphics.hpp>
 
 class game_state : public state
@@ -12,11 +13,7 @@ class game_state : public state
 
     input_field input_f;
 
-    output_field output_f1;
-
-    output_field output_f2;
-
-    output_field output_f3;
+    std::vector<output_field> output_fields;
 
     sf::Vector2i mouse_pos;
 

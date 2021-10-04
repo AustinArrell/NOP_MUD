@@ -8,6 +8,7 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(960, 720), "NOP MUD");
+    window.setVerticalSyncEnabled(true);
 
     sf::Font font;
     font.loadFromFile("../resources/fonts/Roboto-Regular.ttf");
@@ -19,6 +20,7 @@ int main()
     while (window.isOpen())
     {
         sf::Event event;
+
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -29,11 +31,8 @@ int main()
         }
 
         window.clear();
-        
         update_state();
-        
         render_state();
-        
         window.display();
     }
 

@@ -9,6 +9,8 @@ input_field::input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size) :
 
     input_buffer.reserve(100);
 
+    command_history.reserve(150);
+
     input_text.setFont(font);
 
     input_text.setCharacterSize(char_size);
@@ -158,6 +160,10 @@ void input_field::set_cursor_offset(sf::Vector2i mouse_pos)
 //**********************************************************************
 void input_field::send_cursor_home()
 {
+    clock.restart();
+    
+    cursor_visible = true;
+
     cursor.setPosition(pos.x + prompt_glyph.advance , pos.y);
     
     cursor_offset = input_buffer.size();
@@ -167,6 +173,10 @@ void input_field::send_cursor_home()
 //**********************************************************************
 void input_field::send_cursor_end()
 {
+    clock.restart();
+    
+    cursor_visible = true;
+
     cursor.setPosition(pos.x + input_text.getGlobalBounds().width , pos.y);
     
     cursor_offset = 0;
@@ -224,8 +234,12 @@ sf::FloatRect input_field::get_global_bounds() const
 
 
 //**********************************************************************
-std::string input_field::send_command() const
+std::string input_field::send_command()
 {
+    command_history.push_back(input_buffer);
+
+    history_offset = 0;
+
     return input_buffer;
 }
 
@@ -264,6 +278,7 @@ void input_field::update()
     if(clock.getElapsedTime().asMilliseconds() >= cursor_blink_interval)
     {
         clock.restart();
+
         cursor_visible = !cursor_visible;
     }
 }
@@ -274,3 +289,33 @@ sf::Vector2f input_field::get_size() const
 {
     return size;
 }
+
+
+//**********************************************************************
+ void input_field::move_history(bool up)
+ {
+     if(command_history.size() > 0)
+     {
+        if(up && history_offset < command_history.size())
+        {
+            history_offset += 1;
+
+            input_buffer.clear();
+
+            send_cursor_home();
+
+            push_buffer(command_history.rbegin()[history_offset - 1]);
+
+        }else if(!up && history_offset > 0)
+        {
+            history_offset -= 1;
+
+            input_buffer.clear();
+
+            send_cursor_home();
+
+            push_buffer(command_history.rbegin()[history_offset - 1]);
+        }
+
+     }
+ }

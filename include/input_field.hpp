@@ -15,6 +15,10 @@ class input_field : public text_field
 
     int cursor_offset = 0;
 
+    int history_offset = 0;
+
+    std::vector<std::string> command_history;
+
     std::string input_buffer;
 
     sf::Text input_text;
@@ -25,6 +29,7 @@ class input_field : public text_field
 
     bool cursor_visible = true;
 
+    
 public:
 
     explicit input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size);
@@ -49,9 +54,11 @@ public:
 
     sf::FloatRect get_global_bounds() const;
 
-    std::string send_command() const;
+    std::string send_command();
 
     void clear_buffer();
+
+    void move_history(bool up);
 
     
     //Overridden functions

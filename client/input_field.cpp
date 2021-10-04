@@ -94,7 +94,8 @@ void input_field::handle_events(const sf::Event& e)
         {
             if(bg.getGlobalBounds().contains((float) e.mouseButton.x, (float) e.mouseButton.y))
             {
-                set_cursor_offset({ e.mouseButton.x, e.mouseButton.y });
+                // TODO: actually implement
+                //set_cursor_offset({ e.mouseButton.x, e.mouseButton.y });
             }
             else
             {

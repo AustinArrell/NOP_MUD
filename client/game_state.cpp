@@ -62,9 +62,10 @@ void game_state::handle_events(const sf::Event& e)
             output_f1.add_line("------" , false);
 
             input_f.push_history(input_f.get_string());
-            
+
             input_f.clear_buffer();
-        }  
+        }
+    }
 }
 
 
@@ -72,9 +73,9 @@ void game_state::handle_events(const sf::Event& e)
 void game_state::update()
 {
     output_f1.update();
-  
+
     output_f2.update();
-  
+
     output_f3.update();
 
     input_f.update();
@@ -96,9 +97,9 @@ void game_state::update()
 void game_state::draw() const
 {
     output_f1.draw();
-  
+
     output_f2.draw();
-  
+
     output_f3.draw();
 
     input_f.draw();

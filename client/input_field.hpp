@@ -29,10 +29,11 @@ class input_field : public text_field
 
     bool cursor_visible = true;
 
-    
+    bool active = false;
+
 public:
 
-    explicit input_field(sf::Font& f, sf::RenderWindow& w, const int& c_size);
+    explicit input_field(sf::Font& f, sf::RenderWindow& w, size_t c_size);
 
     void push_buffer(const char& c);
 
@@ -54,14 +55,17 @@ public:
 
     sf::FloatRect get_global_bounds() const;
 
-    std::string send_command();
+    std::string get_string() const;
 
     void clear_buffer();
 
+    void handle_events(const sf::Event& e);
+
     void move_history(bool up);
 
-    
-    //Overridden functions
+    void push_history(std::string s);
+
+    // Overridden functions
 
     sf::Vector2f get_pos() const override;
 

@@ -118,7 +118,7 @@ void output_field::add_line(std::string s, bool add_prompt)
     // Creating variables for readability
     size_t stack_size = line_stack.size();
     sf::Text& last_line = line_stack.back();
-    
+  
     // Set text position
     if(stack_size > 1)
     {
@@ -140,7 +140,6 @@ void output_field::add_line(std::string s, bool add_prompt)
     {
         wrap_y();
     }
-
 }
 
 
@@ -148,7 +147,7 @@ void output_field::add_line(std::string s, bool add_prompt)
 void output_field::draw() const
 {
     window.draw(bg);
-    
+  
     for(const auto& i : line_stack)
     {
         if(i.getPosition().y >= pos.y && i.getPosition().y + char_size <= pos.y + size.y)
@@ -156,7 +155,6 @@ void output_field::draw() const
             window.draw(i);
         }
     }
-
 }
 
 
@@ -166,7 +164,6 @@ void output_field::set_size(sf::Vector2f vec)
     size = vec;
 
     bg.setSize(size);
-
 }
 
 
@@ -176,7 +173,6 @@ void output_field::set_pos(sf::Vector2f vec)
     pos = vec;
 
     bg.setPosition(pos);
-
 }
 
 

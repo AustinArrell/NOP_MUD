@@ -23,6 +23,7 @@ public:
 
     sf::Vector2f get_size() const override;
 
+
     void scroll_up();
 
     void scroll_down();

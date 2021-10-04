@@ -24,7 +24,7 @@ protected:
 
 public:
 
-    text_field(sf::Font& f, sf::RenderWindow& w, const int& c_size);
+    text_field(sf::Font& f, sf::RenderWindow& w, size_t c_size);
 
     virtual sf::Vector2f get_pos() const = 0;
 

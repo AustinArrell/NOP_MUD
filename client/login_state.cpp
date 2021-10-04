@@ -72,6 +72,10 @@ void login_state::update()
         {
             change_state("game");
         }
+        else
+        {
+            address_field.clear_buffer();
+        }
     }
 }
 

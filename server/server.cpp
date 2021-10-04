@@ -31,6 +31,7 @@ namespace
 void queue_drop(session_id id);
 void drop_queued();
 
+
 //**********************************************************************
 void run_server()
 {
@@ -118,6 +119,23 @@ bool recieve_from_client(session_id id)
                     sendpacket.type = packet_type::server_response;
                     sendpacket.data = std::to_string( packet.data.size() );
                     sendpacket.send(client);
+
+                    // send data to all other clients
+                    for(auto toid : active_sockets)
+                    {
+                        if(std::find(drop_queue.begin(), drop_queue.end(), toid) != drop_queue.end())
+                        { continue; }
+
+                        if(toid == id)
+                        { continue; }
+
+                        sf::TcpSocket& toclient { sockets[toid] };
+
+                        sendpacket.type = packet_type::server_message;
+                        sendpacket.data = usernames[id] + ": " + packet.data;
+
+                        sendpacket.send(toclient);
+                    }
                 }
 
                 break;

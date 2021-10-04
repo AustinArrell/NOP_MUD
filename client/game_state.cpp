@@ -53,21 +53,16 @@ void game_state::handle_events(const sf::Event& e)
     {
         if (e.key.code == sf::Keyboard::Enter)
         {
-
-            output_f1.add_line("Command Output example. This text can be as long as you want it to be. We can just keep on going. Perhaps this is a room description. Perhaps it is something else. If only I had Douglas' command parser. Imagine the possibilities. Imagine what we may achieve.");
-            output_f1.add_line("------" , false);
-
             send(input_f.get_string(), packet_type::command);
 
             auto packet = recieve();
 
-            output_f2.add_line(input_f.get_string());
-            output_f2.add_line(packet.data , false);
-            output_f2.add_line("------" , false);
+            output_f1.add_line(input_f.get_string());
+            output_f1.add_line(packet.data , false);
+            output_f1.add_line("------" , false);
 
             input_f.clear_buffer();
         }
-
     }
 }
 
@@ -76,6 +71,17 @@ void game_state::handle_events(const sf::Event& e)
 void game_state::update()
 {
     input_f.update();
+
+    if(data_to_recieve())
+    {
+        auto packet = recieve();
+
+        if(packet.type == packet_type::server_message)
+        {
+            output_f1.add_line(packet.data , false);
+            output_f1.add_line("------" , false);
+        }
+    }
 }
 
 

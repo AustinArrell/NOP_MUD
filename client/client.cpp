@@ -5,6 +5,7 @@
 
 namespace
 {
+    sf::SocketSelector selector;
     sf::TcpSocket socket;
     session_id id;
     mud_packet packet;
@@ -46,6 +47,8 @@ bool connect_to_server(const std::string& ip, const std::string& user)
         << std::endl;
     std::cout << "Session id : " << id << std::endl;
 
+    selector.add(socket);
+
     return true;
 }
 
@@ -64,8 +67,16 @@ void send(const std::string& data, packet_type type)
 //**********************************************************************
 const mud_packet& recieve()
 {
+    packet.type = packet_type::invalid;
     packet.receive(socket);
     return packet;
+}
+
+
+//**********************************************************************
+bool data_to_recieve()
+{
+    return selector.wait(sf::seconds(0.0001f));
 }
 
 

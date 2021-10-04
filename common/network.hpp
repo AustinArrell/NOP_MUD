@@ -21,7 +21,9 @@ enum class packet_type : uint8_t
     connection_acknowledge,
     connection_drop,
     connection_accept,
-    server_response
+    server_response,
+    server_message,
+    invalid
 };
 
 

@@ -65,6 +65,10 @@ public:
 
     void push_history(std::string s);
 
+    void set_active(bool b);
+
+    bool get_active() const; 
+
     // Overridden functions
 
     sf::Vector2f get_pos() const override;

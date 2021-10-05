@@ -411,3 +411,16 @@ void input_field::push_history(std::string s)
     command_history.push_back(s);
 }
 
+
+//**********************************************************************
+void input_field::set_active(bool b)
+{
+    active = b;
+}
+
+
+//**********************************************************************
+bool input_field::get_active() const
+{
+    return active;
+}

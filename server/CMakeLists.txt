@@ -12,4 +12,4 @@ set(server_source
 add_executable(mudserver ${server_source})
 
 target_include_directories(mudserver PUBLIC "${CMAKE_SOURCE_DIR}/common")
-target_link_libraries(mudserver sfml-system sfml-network)
+target_link_libraries(mudserver sfml-window sfml-system sfml-network)

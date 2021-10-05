@@ -56,6 +56,25 @@ void login_state::handle_events(const sf::Event& e)
     connect_button.handle_events(e);
     address_field.handle_events(e);
     username_field.handle_events(e);
+
+    if (e.type == sf::Event::KeyPressed)
+    {
+        if(e.key.code == sf::Keyboard::Tab)
+        {
+            if(username_field.get_active())
+            {
+                username_field.set_active(false);
+
+                address_field.set_active(true);
+            }
+            else if(address_field.get_active())
+            {
+                address_field.set_active(false);
+
+                username_field.set_active(true);
+            }
+        }
+    }
 }
 
 
